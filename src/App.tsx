@@ -333,7 +333,7 @@ function App() {
                     {
                       icon: Github,
                       label: "GitHub",
-                      link: "https://x.com/Kaushaly4s5s7",
+                      link: "https://github.com/kaushalya4s5s7",
                     },
                     {
                       icon: Linkedin,
@@ -343,7 +343,7 @@ function App() {
                     {
                       icon: Twitter,
                       label: "Twitter",
-                      link: "https://github.com/kaushalya4s5s7",
+                      link: "https://x.com/Kaushaly4s5s7",
                     },
                   ].map((social, index) => (
                     <motion.a
