@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
+import kc from "./assets/kc.jpg";
 import {
   Code2,
   Brain,
@@ -13,7 +14,7 @@ import {
   Coffee,
   Mail,
   Linkedin,
-  Twitter
+  Twitter,
 } from "lucide-react";
 import Navigation from "./components/Navigation";
 import ProjectCard from "./components/ProjectCard";
@@ -41,17 +42,23 @@ function App() {
   }, []);
 
   const checkWalletConnection = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum !== "undefined") {
       try {
         // Check if already connected
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
         if (accounts.length > 0) {
           // Get the network
-          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          
+          const chainId = await window.ethereum.request({
+            method: "eth_chainId",
+          });
+
           // Check if we're on a supported network (Mainnet: 0x1, Sepolia: 0xaa36a7)
-          if (chainId !== '0x1' && chainId !== '0xaa36a7') {
-            setNetworkError("Please connect to Ethereum Mainnet or Sepolia Testnet");
+          if (chainId !== "0x1" && chainId !== "0xaa36a7") {
+            setNetworkError(
+              "Please connect to Ethereum Mainnet or Sepolia Testnet"
+            );
             return;
           }
 
@@ -68,17 +75,23 @@ function App() {
   };
 
   const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum !== "undefined") {
       try {
         // Request account access
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+
         // Get the network
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        
+        const chainId = await window.ethereum.request({
+          method: "eth_chainId",
+        });
+
         // Check if we're on a supported network
-        if (chainId !== '0x1' && chainId !== '0xaa36a7') {
-          setNetworkError("Please connect to Ethereum Mainnet or Sepolia Testnet");
+        if (chainId !== "0x1" && chainId !== "0xaa36a7") {
+          setNetworkError(
+            "Please connect to Ethereum Mainnet or Sepolia Testnet"
+          );
           return;
         }
 
@@ -88,15 +101,14 @@ function App() {
         setShowContent(true);
 
         // Subscribe to network changes
-        window.ethereum.on('chainChanged', () => {
+        window.ethereum.on("chainChanged", () => {
           window.location.reload();
         });
-        
+
         // Subscribe to account changes
-        window.ethereum.on('accountsChanged', () => {
+        window.ethereum.on("accountsChanged", () => {
           window.location.reload();
         });
-        
       } catch (error) {
         console.error("Error connecting wallet:", error);
         setNetworkError("Error connecting to network");
@@ -108,29 +120,29 @@ function App() {
 
   const handleCommand = (command: string) => {
     switch (command) {
-      case 'cd about':
-        setActiveSection('about');
+      case "cd about":
+        setActiveSection("about");
         break;
-      case 'cd projects':
-        setActiveSection('projects');
+      case "cd projects":
+        setActiveSection("projects");
         break;
-      case 'cd blog':
-        setActiveSection('blog');
+      case "cd blog":
+        setActiveSection("blog");
         break;
-      case 'cd contact':
-        setActiveSection('contact');
+      case "cd contact":
+        setActiveSection("contact");
         break;
-      case 'cd ..':
-        setActiveSection('home');
+      case "cd ..":
+        setActiveSection("home");
         break;
-      case 'clear':
+      case "clear":
         // The terminal component handles clearing internally
         break;
-      case 'help':
+      case "help":
         // Help command is handled by the terminal component
         break;
       default:
-        console.log('Unknown command:', command);
+        console.log("Unknown command:", command);
     }
   };
 
@@ -145,7 +157,7 @@ function App() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-blue-500 font-mono relative">
       <MatrixBackground />
-      
+
       {/* Initial Connection Screen */}
       {!walletConnected && (
         <div className="h-screen flex items-center justify-center relative z-10">
@@ -154,7 +166,11 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="text-3xl mb-8">Web3 Portfolio Terminal</h1>
+            <div className="flex flex-col items-center text-center">
+              <img src={kc} alt="Custom" className="w-48 mb-4" />
+              <h1 className="text-3xl mb-8">KC Welcome's You</h1>
+            </div>
+
             {networkError && (
               <div className="text-red-500 mb-4 p-4 bg-black/50 rounded">
                 {networkError}
@@ -193,7 +209,9 @@ function App() {
           </div>
 
           {/* Sections */}
-          <div className={`mt-8 ${activeSection === 'about' ? 'block' : 'hidden'}`}>
+          <div
+            className={`mt-8 ${activeSection === "about" ? "block" : "hidden"}`}
+          >
             {/* About Section Content */}
             <section className="py-20 px-4">
               <div className="max-w-6xl mx-auto">
@@ -214,7 +232,11 @@ function App() {
             </section>
           </div>
 
-          <div className={`mt-8 ${activeSection === 'projects' ? 'block' : 'hidden'}`}>
+          <div
+            className={`mt-8 ${
+              activeSection === "projects" ? "block" : "hidden"
+            }`}
+          >
             {/* Projects Section */}
             <section className="py-20 px-4">
               <div className="max-w-6xl mx-auto">
@@ -254,26 +276,31 @@ function App() {
             </section>
           </div>
 
-          <div className={`mt-8 ${activeSection === 'blog' ? 'block' : 'hidden'}`}>
+          <div
+            className={`mt-8 ${activeSection === "blog" ? "block" : "hidden"}`}
+          >
             {/* Blog Section */}
             <section className="py-20 px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-8">
                   {[
                     {
-                      title: "Understanding EIP-4626: The Tokenized Vault Standard",
+                      title:
+                        "Understanding EIP-4626: The Tokenized Vault Standard",
                       date: "2024-03-01",
-                      excerpt: "Deep dive into EIP-4626 and its implications for DeFi composability",
+                      excerpt:
+                        "Deep dive into EIP-4626 and its implications for DeFi composability",
                       readTime: "8 min read",
-                      link: "#"
+                      link: "#",
                     },
                     {
                       title: "Gas Optimization Techniques for Smart Contracts",
                       date: "2024-02-15",
-                      excerpt: "Learn advanced techniques to optimize your smart contracts for gas efficiency",
+                      excerpt:
+                        "Learn advanced techniques to optimize your smart contracts for gas efficiency",
                       readTime: "12 min read",
-                      link: "#"
-                    }
+                      link: "#",
+                    },
                   ].map((post, index) => (
                     <motion.div
                       key={index}
@@ -293,15 +320,31 @@ function App() {
             </section>
           </div>
 
-          <div className={`mt-8 ${activeSection === 'contact' ? 'block' : 'hidden'}`}>
+          <div
+            className={`mt-8 ${
+              activeSection === "contact" ? "block" : "hidden"
+            }`}
+          >
             {/* Contact Section */}
             <section className="py-20 px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8">
                   {[
-                    { icon: Github, label: "GitHub", link: "https://x.com/Kaushaly4s5s7" },
-                    { icon: Linkedin, label: "LinkedIn", link: "https://www.linkedin.com/in/kaushal-chaudhari-21b83a1b0/" },
-                    { icon: Twitter, label: "Twitter", link: "https://github.com/kaushalya4s5s7" },
+                    {
+                      icon: Github,
+                      label: "GitHub",
+                      link: "https://x.com/Kaushaly4s5s7",
+                    },
+                    {
+                      icon: Linkedin,
+                      label: "LinkedIn",
+                      link: "https://www.linkedin.com/in/kaushal-chaudhari-21b83a1b0/",
+                    },
+                    {
+                      icon: Twitter,
+                      label: "Twitter",
+                      link: "https://github.com/kaushalya4s5s7",
+                    },
                   ].map((social, index) => (
                     <motion.a
                       key={index}
@@ -326,7 +369,10 @@ function App() {
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <Terminal size={18} />
-                <span className="text-sm">Connected as: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
+                <span className="text-sm">
+                  Connected as: {walletAddress.slice(0, 6)}...
+                  {walletAddress.slice(-4)}
+                </span>
               </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
